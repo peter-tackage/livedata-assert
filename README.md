@@ -11,7 +11,7 @@ Generally the API is similar to assertions provided by RxJava's TestSubscriber.
 // Create your LiveData object to test
 val livedata : LiveData<String> = ...
 
-// Use the test() extension to capture all future events emitted by the LiveData
+// Use the test() extension to capture the most recent and subsequent events emitted by the LiveData
 val liveDataEvents : LiveDataAssertion<String> = livedata.test()
 
 // Act to trigger events
