@@ -1,4 +1,4 @@
-package petertackage.com.livetest
+package com.petertackage.livedataassert
 
 /*
  * Copyright 2018 Peter Tackage
