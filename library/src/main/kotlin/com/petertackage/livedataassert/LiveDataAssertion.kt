@@ -41,7 +41,7 @@ class LiveDataTestObserver<T> : Observer<T>, LiveDataAssertion<T> {
     }
 
     fun getValue(): T? {
-        return values.last()
+        return values.lastOrNull()
     }
 
     fun skip(count: Int = 1): LiveDataTestObserver<T> {
