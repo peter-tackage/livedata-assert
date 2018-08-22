@@ -24,11 +24,20 @@ android {
     }
 }
 
-dependencies {
-    compileOnly("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version")
-    compileOnly( "android.arch.lifecycle:extensions:1.1.1")
-    compileOnly 'junit:junit:4.12'
+ext {
+    dependencyVersions = [
+            kotlin : kotlin_version,
+            android_arch : '1.1.1',
+            junit : '4.12',
+            truth: '0.42']
+}
 
-    implementation 'junit:junit:4.12'
-    testImplementation "com.google.truth:truth:0.42"
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$dependencyVersions.kotlin"
+    implementation "android.arch.lifecycle:extensions:$dependencyVersions.android_arch"
+    implementation "junit:junit:$dependencyVersions.junit"
+
+    testImplementation "android.arch.core:core-testing:$dependencyVersions.android_arch"
+    testImplementation "junit:junit:$dependencyVersions.junit"
+    testImplementation "com.google.truth:truth:$dependencyVersions.truth"
 }
