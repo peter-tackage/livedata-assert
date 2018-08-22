@@ -20,7 +20,7 @@ import android.arch.lifecycle.Observer
 import org.junit.Assert.assertTrue
 import junit.framework.TestCase.assertEquals
 
-class TestObserver<T> : Observer<T>, LiveDataAssertion<T> {
+class LiveDataTestObserver<T> : Observer<T>, LiveDataAssertion<T> {
 
     private val mutableValues: MutableList<T?>
 
@@ -29,7 +29,7 @@ class TestObserver<T> : Observer<T>, LiveDataAssertion<T> {
     }
 
     private constructor(values: MutableList<T?>) {
-        TestObserver<T>()
+        LiveDataTestObserver<T>()
         this.mutableValues = values
     }
 
@@ -44,13 +44,13 @@ class TestObserver<T> : Observer<T>, LiveDataAssertion<T> {
         return values.last()
     }
 
-    fun skip(count: Int = 1): TestObserver<T> {
+    fun skip(count: Int = 1): LiveDataTestObserver<T> {
         if (count < 0) {
             throw IllegalArgumentException("Skip count parameter must be non-negative")
         }
         assertValueCountAtLeast("Cannot skip: $count value(s), when only: ${mutableValues.size} values", count + 1)
 
-        return TestObserver(mutableValues.subList(count, mutableValues.lastIndex))
+        return LiveDataTestObserver(mutableValues.subList(count, mutableValues.lastIndex))
     }
 
     override fun assertValueCount(expectedCount: Int): LiveDataAssertion<T> {

@@ -18,8 +18,8 @@ package com.petertackage.livedataassert
 
 import android.arch.lifecycle.LiveData
 
-fun <T> LiveData<T>.test(): TestObserver<T> {
-    return TestObserver<T>()
+fun <T> LiveData<T>.test(): LiveDataTestObserver<T> {
+    return LiveDataTestObserver<T>()
             .apply {
                 observeForever(this)
             }
