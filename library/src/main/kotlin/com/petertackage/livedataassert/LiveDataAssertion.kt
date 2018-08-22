@@ -24,7 +24,7 @@ class LiveDataTestObserver<T> : Observer<T>, LiveDataAssertion<T> {
 
     private val mutableValues: MutableList<T?>
 
-    constructor() {
+    internal constructor() {
         mutableValues = ArrayList()
     }
 
