@@ -58,10 +58,10 @@ class LiveDataTestObserver<T> : Observer<T>, LiveDataAssertion<T> {
             throw IllegalArgumentException("Expected count parameter must be non-negative")
         }
 
-        return assertValueCount("Expected: $expectedCount values, but has: $1", expectedCount)
+        return assertValueCount("Expected: $expectedCount value(s), but has: $1", expectedCount)
     }
 
-    override fun assertOnlyValue(expected: T): LiveDataAssertion<T> {
+    override fun assertOnlyValue(expected: T?): LiveDataAssertion<T> {
         assertValueCount("Expected a single value, but has: $1", 1)
 
         val actual = values.last()
@@ -69,7 +69,7 @@ class LiveDataTestObserver<T> : Observer<T>, LiveDataAssertion<T> {
         return this
     }
 
-    override fun assertValue(expected: T): LiveDataAssertion<T> {
+    override fun assertValue(expected: T?): LiveDataAssertion<T> {
         assertAtLeastSingleValueCount()
 
         val actual = values.last()
@@ -77,7 +77,7 @@ class LiveDataTestObserver<T> : Observer<T>, LiveDataAssertion<T> {
         return this
     }
 
-    override fun assertValue(expectedPredicate: (T) -> Boolean): LiveDataAssertion<T> {
+    override fun assertValue(expectedPredicate: (T?) -> Boolean): LiveDataAssertion<T> {
         assertAtLeastSingleValueCount()
 
         val actual = values.last()!!
@@ -85,7 +85,7 @@ class LiveDataTestObserver<T> : Observer<T>, LiveDataAssertion<T> {
         return this
     }
 
-    override fun assertValueAt(index: Int, expected: T): LiveDataAssertion<T> {
+    override fun assertValueAt(index: Int, expected: T?): LiveDataAssertion<T> {
         val atLeastValueCount = index + 1
         assertValueCountAtLeast("Expected at least: $atLeastValueCount values, but has: $1", atLeastValueCount)
 
@@ -98,12 +98,12 @@ class LiveDataTestObserver<T> : Observer<T>, LiveDataAssertion<T> {
         return assertValueCount("Expected no values, but has: $1", 0)
     }
 
-    override fun assertValues(vararg expected: T): LiveDataAssertion<T> {
+    override fun assertValues(vararg expected: T?): LiveDataAssertion<T> {
         assertEquals(expected, values)
         return this
     }
 
-    override fun assertOnlyValues(vararg expected: T): LiveDataAssertion<T> {
+    override fun assertOnlyValues(vararg expected: T?): LiveDataAssertion<T> {
         assertEquals(expected, values)
         return this
     }
@@ -138,11 +138,11 @@ interface LiveDataAssertion<T> {
 
     fun assertNoValues(): LiveDataAssertion<T>
     fun assertValueCount(expectedCount: Int): LiveDataAssertion<T>
-    fun assertValueAt(index: Int, expected: T): LiveDataAssertion<T>
-    fun assertOnlyValue(expected: T): LiveDataAssertion<T>
-    fun assertOnlyValues(vararg expected: T): LiveDataAssertion<T>
-    fun assertValue(expected: T): LiveDataAssertion<T>
-    fun assertValue(expectedPredicate: (T) -> Boolean): LiveDataAssertion<T>
-    fun assertValues(vararg expected: T): LiveDataAssertion<T>
+    fun assertValueAt(index: Int, expected: T?): LiveDataAssertion<T>
+    fun assertOnlyValue(expected: T?): LiveDataAssertion<T>
+    fun assertOnlyValues(vararg expected: T?): LiveDataAssertion<T>
+    fun assertValue(expected: T?): LiveDataAssertion<T>
+    fun assertValue(expectedPredicate: (T?) -> Boolean): LiveDataAssertion<T>
+    fun assertValues(vararg expected: T?): LiveDataAssertion<T>
 }
 

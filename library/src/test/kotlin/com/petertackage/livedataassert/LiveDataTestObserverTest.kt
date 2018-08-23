@@ -163,19 +163,156 @@ class LiveDataTestObserverTest {
     }
 
     @Test
-    fun assertValueCount() {
+    fun `assertValueCount() does not assert when values match (zero values)`() {
+        val ld = MutableLiveData<String>()
+
+        val lda = ld.test()
+
+        lda.assertValueCount(0)
     }
 
     @Test
-    fun assertOnlyValue() {
+    fun `assertValueCount() does not assert when values match (one value)`() {
+        val ld = MutableLiveData<String>()
+        val lda = ld.test()
+
+        ld.postValue("abc")
+
+        lda.assertValueCount(1)
     }
 
     @Test
-    fun assertValue() {
+    fun `assertValueCount() asserts when values do not match (zero values)`() {
+        val ld = MutableLiveData<String>()
+        val lda = ld.test()
+
+        val ts = assertThrows<AssertionError> {lda.assertValueCount(1)}
+
+        ts.isInstanceOf(AssertionError::class.java)
+        ts.hasMessageThat().isEqualTo("Expected: 1 value(s), but has: 0")
     }
 
     @Test
-    fun assertValue1() {
+    fun `assertValueCount() asserts when values do not match (one value)`() {
+        val ld = MutableLiveData<String>()
+        val lda = ld.test()
+        ld.postValue("abc")
+
+        val ts = assertThrows<AssertionError> {lda.assertValueCount(0) }
+
+        ts.isInstanceOf(AssertionError::class.java)
+        ts.hasMessageThat().isEqualTo("Expected: 0 value(s), but has: 1")
+    }
+
+    @Test
+    fun `assertValueCount() expectedCount cannot be negative`() {
+        val ld = MutableLiveData<String>()
+        val lda = ld.test()
+        ld.postValue("abc")
+
+        val ts = assertThrows<IllegalArgumentException> {lda.assertValueCount(-1) }
+
+        ts.isInstanceOf(IllegalArgumentException::class.java)
+        ts.hasMessageThat().isEqualTo("Expected count parameter must be non-negative")
+    }
+
+    @Test
+    fun `assertOnlyValue() does not assert when only one value which matches`() {
+        val ld = MutableLiveData<String>()
+        val lda = ld.test()
+
+        ld.postValue("abc")
+
+        lda.assertOnlyValue("abc")
+    }
+
+    @Test
+    fun `assertOnlyValue() asserts when more than one value which matches`() {
+        val ld = MutableLiveData<String>()
+        val lda = ld.test()
+        ld.postValue("abc")
+        ld.postValue("def")
+
+        val ts = assertThrows<AssertionError> { lda.assertOnlyValue("def") }
+
+        ts.isInstanceOf(AssertionError::class.java)
+        ts.hasMessageThat().isEqualTo("Expected a single value, but has: 2")
+    }
+
+    @Test
+    fun `assertOnlyValue() asserts when one value which does not match`() {
+        val ld = MutableLiveData<String>()
+        val lda = ld.test()
+        ld.postValue("abc")
+
+        val ts = assertThrows<AssertionError> { lda.assertOnlyValue("def") }
+
+        ts.isInstanceOf(AssertionError::class.java)
+        ts.hasMessageThat().isEqualTo("expected:<def> but was:<abc>")
+    }
+
+    @Test
+    fun `assertValue() does not assert when only one value which matches`() {
+        val ld = MutableLiveData<String>()
+        val lda = ld.test()
+
+        ld.postValue("abc")
+
+        lda.assertValue("abc")
+    }
+
+    @Test
+    fun `assertValue() does not assert when only multiple values, the last of which matches`() {
+        val ld = MutableLiveData<String>()
+        val lda = ld.test()
+
+        ld.postValue("abc")
+        ld.postValue("def")
+        ld.postValue("ghi")
+
+        lda.assertValue("ghi")
+    }
+
+    @Test
+    fun `assertValue() asserts when no value posted`() {
+        val ld = MutableLiveData<String>()
+        val lda = ld.test()
+
+        val ts = assertThrows<AssertionError> { lda.assertValue("abc") }
+
+        ts.isInstanceOf(AssertionError::class.java)
+        ts.hasMessageThat().isEqualTo("Expected at least one value.")
+    }
+
+    @Test
+    fun `assertValue() asserts when single value posted does not match`() {
+        val ld = MutableLiveData<String>()
+        val lda = ld.test()
+        ld.postValue("abc")
+
+        val ts = assertThrows<AssertionError> { lda.assertValue("def") }
+
+        ts.isInstanceOf(AssertionError::class.java)
+        ts.hasMessageThat().isEqualTo("expected:<def> but was:<abc>")
+    }
+
+    @Test
+    fun `assertValue() asserts when multiple value posted, but last of which does not match`() {
+        val ld = MutableLiveData<String>()
+        val lda = ld.test()
+        ld.postValue("abc")
+        ld.postValue("def")
+        ld.postValue("ghi")
+
+        val ts = assertThrows<AssertionError> { lda.assertValue("def") }
+
+        ts.isInstanceOf(AssertionError::class.java)
+        ts.hasMessageThat().isEqualTo("expected:<def> but was:<ghi>")
+    }
+
+
+    @Test
+    fun assertValuePredicate() {
     }
 
     @Test
