@@ -17,10 +17,8 @@ package com.petertackage.livedataassert
  */
 
 import android.arch.lifecycle.Observer
-import org.junit.Assert.assertTrue
-import junit.framework.TestCase.assertEquals
 
-class LiveDataTestObserver<T> : Observer<T>, LiveDataAssertion<T> {
+class LiveDataTestObserver<T> : Observer<T> {
 
     private val mutableValues: MutableList<T?>
 
@@ -29,9 +27,12 @@ class LiveDataTestObserver<T> : Observer<T>, LiveDataAssertion<T> {
     }
 
     private constructor(values: MutableList<T?>) {
-        LiveDataTestObserver<T>()
+        LiveDataTestObserver<T?>()
         this.mutableValues = values
     }
+
+    val value
+        get() = values.last()
 
     val values
         get() = mutableValues.toList()
@@ -40,109 +41,16 @@ class LiveDataTestObserver<T> : Observer<T>, LiveDataAssertion<T> {
         mutableValues.add(t)
     }
 
-    fun getValue(): T? {
-        return values.lastOrNull()
-    }
-
     fun skip(count: Int = 1): LiveDataTestObserver<T> {
-        if (count < 0) {
-            throw IllegalArgumentException("Skip count parameter must be non-negative")
-        }
-        assertValueCountAtLeast("Cannot skip: $count value(s), when only: ${mutableValues.size} values", count + 1)
-
-        return LiveDataTestObserver(mutableValues.subList(count, mutableValues.lastIndex))
-    }
-
-    override fun assertValueCount(expectedCount: Int): LiveDataAssertion<T> {
-        if (expectedCount < 0) {
-            throw IllegalArgumentException("Expected count parameter must be non-negative")
+        if (count <= 0) {
+            throw IllegalArgumentException("Skip count parameter value must be greater than zero")
         }
 
-        return assertValueCount("Expected: $expectedCount value(s), but has: $1", expectedCount)
-    }
-
-    override fun assertOnlyValue(expected: T?): LiveDataAssertion<T> {
-        assertValueCount("Expected a single value, but has: $1", 1)
-
-        val actual = values.last()
-        assertEquals(expected, actual)
-        return this
-    }
-
-    override fun assertValue(expected: T?): LiveDataAssertion<T> {
-        assertAtLeastSingleValueCount()
-
-        val actual = values.last()
-        assertEquals(expected, actual)
-        return this
-    }
-
-    override fun assertValue(expectedPredicate: (T?) -> Boolean): LiveDataAssertion<T> {
-        assertAtLeastSingleValueCount()
-
-        val actual = values.last()!!
-        assertTrue(expectedPredicate(actual))
-        return this
-    }
-
-    override fun assertValueAt(index: Int, expected: T?): LiveDataAssertion<T> {
-        val atLeastValueCount = index + 1
-        assertValueCountAtLeast("Expected at least: $atLeastValueCount values, but has: $1", atLeastValueCount)
-
-        val actual = values[index]
-        assertEquals(expected, actual)
-        return this
-    }
-
-    override fun assertNoValues(): LiveDataAssertion<T> {
-        return assertValueCount("Expected no values, but has: $1", 0)
-    }
-
-    override fun assertValues(vararg expected: T?): LiveDataAssertion<T> {
-        assertEquals(expected, values)
-        return this
-    }
-
-    override fun assertOnlyValues(vararg expected: T?): LiveDataAssertion<T> {
-        assertEquals(expected, values)
-        return this
-    }
-
-    //
-    // Internal Helpers
-    //
-
-    private fun assertValueCount(msg: String, expectedCount: Int): LiveDataAssertion<T> {
-        val actualCount = values.size
-        assertEquals(msg.format(actualCount), expectedCount, actualCount)
-        return this
-    }
-
-    private fun assertValueCountAtLeast(msg: String, expectedCount: Int): LiveDataAssertion<T> {
-        if (expectedCount < 0) {
-            throw IllegalArgumentException("Expected count parameter must be non-negative")
+        if (count > mutableValues.size) {
+            throw IllegalArgumentException("Cannot skip: $count value(s), when only: ${mutableValues.size} values")
         }
 
-        val actualCount = values.size
-        assertTrue(msg.format(actualCount), expectedCount <= actualCount)
-        return this
-    }
-
-    private fun assertAtLeastSingleValueCount() {
-        assertValueCountAtLeast("Expected at least one value.", 1)
+        return LiveDataTestObserver(mutableValues.subList(count, mutableValues.lastIndex +1))
     }
 
 }
-
-interface LiveDataAssertion<T> {
-
-    fun assertNoValues(): LiveDataAssertion<T>
-    fun assertValueCount(expectedCount: Int): LiveDataAssertion<T>
-    fun assertValueAt(index: Int, expected: T?): LiveDataAssertion<T>
-    fun assertOnlyValue(expected: T?): LiveDataAssertion<T>
-    fun assertOnlyValues(vararg expected: T?): LiveDataAssertion<T>
-    fun assertValue(expected: T?): LiveDataAssertion<T>
-    fun assertValue(expectedPredicate: (T?) -> Boolean): LiveDataAssertion<T>
-    fun assertValues(vararg expected: T?): LiveDataAssertion<T>
-}
-

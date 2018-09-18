@@ -1,0 +1,43 @@
+package com.petertackage.livedataassert.truth
+
+/*
+ * Copyright 2018 Peter Tackage
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import android.arch.core.executor.testing.InstantTaskExecutorRule
+import android.arch.lifecycle.MutableLiveData
+import com.petertackage.livedataassert.test
+import org.junit.Rule
+import org.junit.Test
+import org.junit.rules.TestRule
+
+class LiveDataTruthAssertionsTest {
+
+    @Rule
+    @JvmField
+    var rule: TestRule = InstantTaskExecutorRule()
+
+    @Test
+    fun `simple truth assertions test`() {
+        val ld = MutableLiveData<String>()
+        val lda = ld.test()
+
+        ld.postValue("abc")
+
+        lda.assertTruth()
+                .containsExactly("abc")
+    }
+
+}
