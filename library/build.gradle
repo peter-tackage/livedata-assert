@@ -28,18 +28,14 @@ ext {
     dependencyVersions = [
             kotlin : kotlin_version,
             android_arch : '1.1.1',
-            junit : '4.12',
-            truth: '0.42']
+            junit : '4.12']
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$dependencyVersions.kotlin"
     implementation "android.arch.lifecycle:extensions:$dependencyVersions.android_arch"
     implementation "junit:junit:$dependencyVersions.junit"
-    implementation "com.google.truth:truth:$dependencyVersions.truth"
-
 
     testImplementation "android.arch.core:core-testing:$dependencyVersions.android_arch"
     testImplementation "junit:junit:$dependencyVersions.junit"
-    testImplementation "com.google.truth:truth:$dependencyVersions.truth"
 }
