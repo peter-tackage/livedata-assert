@@ -4,35 +4,46 @@ A small Android Kotlin library to help you test Android's LiveData objects.
 
 ## Usage
 
-```kotlin
-// Define the LiveData object
-val livedata = MutableLiveData<String>()
+The `values` property allows you to test all the values emitted by the LiveData .
 
-// Use the test() extension to capture the most recent and subsequent events emitted by the LiveData
-val liveDataTest = livedata.test()
+```kotlin
+val liveData = MutableLiveData<String>()
+val liveDataTest = liveData.test()
 
 // Act to trigger events on the LiveData object
-livedata.postValue("abc")
-livedata.postValue("def")
-livedata.postValue("123")
-livedata.postValue("ghi")
+liveData.postValue("abc")
+liveData.postValue("def")
+liveData.postValue("123")
+liveData.postValue("ghi")
 
-// Use the value or values properties to assert your test conditions however you like
 assertEquals(listOf("abc", "def", "123", "ghi"), liveDataTest.values)
+
+```
+
+The `value` property allows you to test the latest value emitted by the LiveData .
+
+```kotlin
+val liveData = MutableLiveData<String>()
+val liveDataTest = liveData.test()
+
+// Act to trigger events on the LiveData object
+liveData.postValue("abc")
+liveData.postValue("def")
+
+assertEquals("def", liveDataTest.value)
 
 ```
 
 The `skip` function allows you ignore initial emissions from the LiveData object.
 
 ```kotlin
-val livedata = MutableLiveData<String>()
-
+val liveData = MutableLiveData<String>()
 val liveDataTest = livedata.test()
 
-livedata.postValue("abc")
-livedata.postValue("def")
-livedata.postValue("123")
-livedata.postValue("ghi")
+liveData.postValue("abc")
+liveData.postValue("def")
+liveData.postValue("123")
+liveData.postValue("ghi")
 
 // Skips the first two values: "abc" and "def"
 assertEquals(listOf("123", "ghi"), liveDataTest.skip(2).values)
