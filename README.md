@@ -9,7 +9,7 @@ A small Android Kotlin library to help you test Android's LiveData objects.
 val livedata = MutableLiveData<String>()
 
 // Use the test() extension to capture the most recent and subsequent events emitted by the LiveData
-val liveDataEvents = livedatam.test()
+val liveDataTest = livedata.test()
 
 // Act to trigger events on the LiveData object
 livedata.postValue("abc")
@@ -18,7 +18,7 @@ livedata.postValue("123")
 livedata.postValue("ghi")
 
 // Use the value or values properties to assert your test conditions however you like
-assertEquals(listOf("abc", "def", "123", "ghi"), liveDataEvents.values)
+assertEquals(listOf("abc", "def", "123", "ghi"), liveDataTest.values)
 
 ```
 
@@ -27,7 +27,7 @@ The `skip` function allows you ignore initial emissions from the LiveData object
 ```kotlin
 val livedata = MutableLiveData<String>()
 
-val liveDataEvents = livedata.test()
+val liveDataTest = livedata.test()
 
 livedata.postValue("abc")
 livedata.postValue("def")
@@ -35,7 +35,7 @@ livedata.postValue("123")
 livedata.postValue("ghi")
 
 // Skips the first two values: "abc" and "def"
-assertEquals(listOf("123", "ghi"), liveDataEvents.skip(2).values)
+assertEquals(listOf("123", "ghi"), liveDataTest.skip(2).values)
 ```
 
 # Acknowledgements
