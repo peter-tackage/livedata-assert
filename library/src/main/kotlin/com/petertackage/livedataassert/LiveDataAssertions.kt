@@ -1,4 +1,4 @@
-package petertackage.com.livetest
+package com.petertackage.livedataassert
 
 /*
  * Copyright 2018 Peter Tackage
@@ -18,8 +18,8 @@ package petertackage.com.livetest
 
 import android.arch.lifecycle.LiveData
 
-fun <T> LiveData<T>.test(): TestObserver<T> {
-    return TestObserver<T>()
+fun <T> LiveData<T>.test(): LiveDataTestObserver<T> {
+    return LiveDataTestObserver<T>()
             .apply {
                 observeForever(this)
             }

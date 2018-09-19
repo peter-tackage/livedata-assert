@@ -1,29 +1,26 @@
-# LiveTest
+# LiveData-Test
 
-A small Android Kotlin library to provide a flexible set of assertions for Android's LiveData.
+A small Android Kotlin library to help you test Android's LiveData objects.
 
 ## Usage
 
-Generally the API is similar to assertions provided by RxJava's TestSubscriber.
-
-
 ```kotlin
-// Create your LiveData object to test
-val livedata : LiveData<String> = ...
+// Define the LiveData object
+val livedata = MutableLiveData<String>()
 
 // Use the test() extension to capture the most recent and subsequent events emitted by the LiveData
-val liveDataEvents : LiveDataAssertion<String> = livedata.test()
+val liveDataEvents = ld.test()
 
-// Act to trigger events
-// ...
+// Act to trigger events on the LiveData object
+livedata.postValue("abc")
+livedata.postValue("def")
+livedata.postValue("abc")
+livedata.postValue("ghi")
 
-// Assert
-liveDataEvents
-    .assertValueCount(2)
-    .assertValues("value1", "value2")
+// Use the value or values properties to assert your test conditions however you like
+assertEquals(listOf("abc", "def", "abc", "ghi"), liveDataEvents.values)
+
 ```
-
-You can directly access the values captured via `test().values()` and assert on them with a more sophisticated assertion library, such as AssertJ or Truth.
 
 # Acknowledgements
 

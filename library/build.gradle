@@ -17,12 +17,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        androidTest.java.srcDirs += "src/androidTest/kotlin"
+        main.java.srcDirs += "src/main/kotlin"
+        test.java.srcDirs += "src/test/kotlin"
+    }
+}
+
+ext {
+    dependencyVersions = [
+            kotlin : kotlin_version,
+            android_arch : '1.1.1',
+            junit : '4.12']
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version")
-    implementation( "android.arch.lifecycle:extensions:1.1.1")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$dependencyVersions.kotlin"
+    implementation "android.arch.lifecycle:extensions:$dependencyVersions.android_arch"
+    implementation "junit:junit:$dependencyVersions.junit"
 
-    implementation 'junit:junit:4.12'
+    testImplementation "android.arch.core:core-testing:$dependencyVersions.android_arch"
+    testImplementation "junit:junit:$dependencyVersions.junit"
 }
