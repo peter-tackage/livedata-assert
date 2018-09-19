@@ -14,12 +14,28 @@ val liveDataEvents = ld.test()
 // Act to trigger events on the LiveData object
 livedata.postValue("abc")
 livedata.postValue("def")
-livedata.postValue("abc")
+livedata.postValue("123")
 livedata.postValue("ghi")
 
 // Use the value or values properties to assert your test conditions however you like
-assertEquals(listOf("abc", "def", "abc", "ghi"), liveDataEvents.values)
+assertEquals(listOf("abc", "def", "123", "ghi"), liveDataEvents.values)
 
+```
+
+The `skip` function allows you ignore initial emissions from the LiveData object.
+
+```kotlin
+val livedata = MutableLiveData<String>()
+
+val liveDataEvents = ld.test()
+
+livedata.postValue("abc")
+livedata.postValue("def")
+livedata.postValue("123")
+livedata.postValue("ghi")
+
+// Skips the first two values: "abc" and "def"
+assertEquals(listOf("123", "ghi"), liveDataEvents.skip(2).values)
 ```
 
 # Acknowledgements
