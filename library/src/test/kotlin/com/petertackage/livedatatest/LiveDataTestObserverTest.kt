@@ -33,7 +33,7 @@ class LiveDataTestObserverTest {
 
     @Rule
     @JvmField
-    var thrown : ExpectedException = ExpectedException.none()
+    var thrown: ExpectedException = ExpectedException.none()
 
     @Test
     fun `value throws NoSuchElementException when no values posted`() {

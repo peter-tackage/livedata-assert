@@ -20,7 +20,5 @@ import android.arch.lifecycle.LiveData
 
 fun <T> LiveData<T>.test(): LiveDataTestObserver<T> {
     return LiveDataTestObserver<T>()
-            .apply {
-                observeForever(this)
-            }
+            .apply { observeForever(this) }
 }

@@ -50,7 +50,7 @@ class LiveDataTestObserver<T> : Observer<T> {
             throw IllegalArgumentException("Cannot skip: $count value(s), when only: ${mutableValues.size} values")
         }
 
-        return LiveDataTestObserver(mutableValues.subList(count, mutableValues.lastIndex +1))
+        return LiveDataTestObserver(mutableValues.subList(count, mutableValues.lastIndex + 1))
     }
 
 }

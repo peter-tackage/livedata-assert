@@ -26,9 +26,9 @@ android {
 
 ext {
     dependencyVersions = [
-            kotlin : kotlin_version,
-            android_arch : '1.1.1',
-            junit : '4.12']
+            kotlin      : kotlin_version,
+            android_arch: '1.1.1',
+            junit       : '4.12']
 }
 
 dependencies {
