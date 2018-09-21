@@ -1,5 +1,7 @@
 # LiveData-Test
 
+[![Build Status](https://travis-ci.org/peter-tackage/livedata-test.svg?branch=master)](https://travis-ci.org/peter-tackage/livedata-test)
+
 A small Android Kotlin library to help you test Android's LiveData objects.
 
 ## Usage
