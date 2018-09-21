@@ -34,7 +34,6 @@ ext {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$dependencyVersions.kotlin"
     implementation "android.arch.lifecycle:extensions:$dependencyVersions.android_arch"
-    implementation "junit:junit:$dependencyVersions.junit"
 
     testImplementation "android.arch.core:core-testing:$dependencyVersions.android_arch"
     testImplementation "junit:junit:$dependencyVersions.junit"
