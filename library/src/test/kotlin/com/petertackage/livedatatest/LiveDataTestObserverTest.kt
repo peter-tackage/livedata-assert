@@ -124,10 +124,41 @@ class LiveDataTestObserverTest {
     }
 
     @Test
+    fun `skip count parameter must be non-negative throws IllegalArgumentException`() {
+        val ld = MutableLiveData<String>()
+        val lda = ld.test()
+        thrown.expect(IllegalArgumentException::class.java)
+        thrown.expectMessage("Skip count parameter value must be non-negative")
+
+        lda.skip(-1)
+    }
+
+    @Test
+    fun `skip zero does not throw IllegalArgumentException when no values posted`() {
+        val ld = MutableLiveData<String>()
+        val lda = ld.test()
+
+        val values = lda.skip(0).values
+
+        assertEquals(emptyList<String>(), values)
+    }
+
+    @Test
+    fun `skip zero does not throw IllegalArgumentException when one values posted`() {
+        val ld = MutableLiveData<String>()
+        val lda = ld.test()
+
+        ld.postValue("abc")
+
+        lda.skip(0)
+    }
+
+    @Test
     fun `skip throws IllegalArgumentException when no values posted`() {
         val ld = MutableLiveData<String>()
         val lda = ld.test()
         thrown.expect(IllegalArgumentException::class.java)
+        thrown.expectMessage("Cannot skip: 1 value(s), when only: 0 value(s)")
 
         lda.skip()
     }
@@ -137,6 +168,7 @@ class LiveDataTestObserverTest {
         val ld = MutableLiveData<String>()
         val lda = ld.test()
         thrown.expect(IllegalArgumentException::class.java)
+        thrown.expectMessage("Cannot skip: 3 value(s), when only: 2 value(s)")
 
         ld.postValue("abc")
         ld.postValue("def")

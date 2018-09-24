@@ -42,13 +42,8 @@ class LiveDataTestObserver<T> : Observer<T> {
     }
 
     fun skip(count: Int = 1): LiveDataTestObserver<T> {
-        if (count <= 0) {
-            throw IllegalArgumentException("Skip count parameter value must be greater than zero")
-        }
-
-        if (count > mutableValues.size) {
-            throw IllegalArgumentException("Cannot skip: $count value(s), when only: ${mutableValues.size} values")
-        }
+        require(count >= 0) { "Skip count parameter value must be non-negative" }
+        require(count <= mutableValues.size) { "Cannot skip: $count value(s), when only: ${mutableValues.size} value(s)" }
 
         return LiveDataTestObserver(mutableValues.subList(count, mutableValues.lastIndex + 1))
     }
