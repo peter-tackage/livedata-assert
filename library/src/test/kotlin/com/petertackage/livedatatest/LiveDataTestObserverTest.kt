@@ -144,13 +144,25 @@ class LiveDataTestObserverTest {
     }
 
     @Test
-    fun `skip zero does not throw IllegalArgumentException when one values posted`() {
+    fun `skip zero does not throw IllegalArgumentException when one value posted`() {
         val ld = MutableLiveData<String>()
         val lda = ld.test()
 
         ld.postValue("abc")
 
         lda.skip(count = 0)
+    }
+
+    @Test
+    fun `skip zero returns unchanged values`() {
+        val ld = MutableLiveData<String>()
+        val lda = ld.test()
+
+        ld.postValue("abc")
+        ld.postValue("def")
+        val values = lda.skip(count = 0).values
+
+        assertEquals(listOf("abc", "def"), values)
     }
 
     @Test
