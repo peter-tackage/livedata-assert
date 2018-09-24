@@ -130,7 +130,7 @@ class LiveDataTestObserverTest {
         thrown.expect(IllegalArgumentException::class.java)
         thrown.expectMessage("Skip count parameter value must be non-negative")
 
-        lda.skip(-1)
+        lda.skip(count = -1)
     }
 
     @Test
@@ -138,7 +138,7 @@ class LiveDataTestObserverTest {
         val ld = MutableLiveData<String>()
         val lda = ld.test()
 
-        val values = lda.skip(0).values
+        val values = lda.skip(count = 0).values
 
         assertEquals(emptyList<String>(), values)
     }
@@ -150,7 +150,7 @@ class LiveDataTestObserverTest {
 
         ld.postValue("abc")
 
-        lda.skip(0)
+        lda.skip(count = 0)
     }
 
     @Test
