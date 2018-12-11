@@ -36,21 +36,6 @@ assertEquals("def", liveDataTest.value)
 
 ```
 
-The `skip` function allows you ignore initial emissions from the LiveData object.
-
-```kotlin
-val liveData = MutableLiveData<String>()
-val liveDataTest = livedata.test()
-
-liveData.postValue("abc")
-liveData.postValue("def")
-liveData.postValue("123")
-liveData.postValue("ghi")
-
-// Skips the first two values: "abc" and "def"
-assertEquals(listOf("123", "ghi"), liveDataTest.skip(2).values)
-```
-
 # Acknowledgements
 
 Brought to you by the power of the [Chilicorn](http://spiceprogram.org/chilicorn-history/) and the [Futurice Open Source Program](http://spiceprogram.org/).

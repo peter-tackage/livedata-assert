@@ -41,11 +41,4 @@ class LiveDataTestObserver<T> : Observer<T> {
         mutableValues.add(t)
     }
 
-    fun skip(count: Int = 1): LiveDataTestObserver<T> {
-        require(count >= 0) { "Skip count parameter value must be non-negative" }
-        require(count <= mutableValues.size) { "Cannot skip: $count value(s), when only: ${mutableValues.size} value(s)" }
-
-        return LiveDataTestObserver(mutableValues.subList(count, mutableValues.lastIndex + 1))
-    }
-
 }
