@@ -18,18 +18,9 @@ package com.petertackage.livedatatest
 
 import android.arch.lifecycle.Observer
 
-class LiveDataTestObserver<T> : Observer<T> {
+class LiveDataTestObserver<T> internal constructor() : Observer<T> {
 
     private val mutableValues: MutableList<T?>
-
-    internal constructor() {
-        mutableValues = ArrayList()
-    }
-
-    private constructor(values: MutableList<T?>) {
-        LiveDataTestObserver<T?>()
-        this.mutableValues = values
-    }
 
     val value
         get() = values.last()
@@ -39,6 +30,10 @@ class LiveDataTestObserver<T> : Observer<T> {
 
     override fun onChanged(t: T?) {
         mutableValues.add(t)
+    }
+
+    init {
+        mutableValues = ArrayList()
     }
 
 }
