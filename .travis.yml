@@ -1,5 +1,8 @@
 language: android
 dist: trusty
+global:
+    - ANDROID_API_LEVEL=29
+    - ANDROID_BUILD_TOOLS_VERSION=29.0.2
 android:
     components:
         - build-tools-29.0.2
@@ -13,6 +16,10 @@ android:
         - android-sdk-license-.+
         - google-gdk-license-.+
         - '.+'
-
+before_install:
+    - mkdir "$ANDROID_HOME/licenses" || true
+    - echo -e "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_HOME/licenses/android-sdk-license"
+    - yes | sdkmanager "platforms;android-29"
+    - yes | sdkmanager "build-tools;29.0.2"
 script:
     - "./gradlew check"
