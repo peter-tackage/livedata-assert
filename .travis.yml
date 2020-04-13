@@ -1,19 +1,5 @@
 language: android
-install: true
-sudo: false
-notifications:
-    email: false
-env:
-    global:
-        - ADB_INSTALL_TIMEOUT=8
-cache:
-    directories:
-        - "$HOME/.m2/repository"
-        - "$HOME/.sonar/cache"
-        - "$HOME/.gradle"
-        - ".gradle"
-jdk:
-    - oraclejdk8
+dist: trusty
 
 android:
     licenses:
@@ -23,14 +9,8 @@ android:
         - platform-tools
         - tools
         - build-tools-25.0.2
-        - android-25
-        - android-24
+        - android-29
         - extra-google-m2repository
-        - sys-img-armeabi-v7a-android-24
-
-before_install:
-    - mkdir "$ANDROID_HOME/licenses" || true
-    - echo -e "d56f5187479451eabf01fb78af6dfcb131a6481e" > "$ANDROID_HOME/licenses/android-sdk-license"
 
 script:
     - "./gradlew check"
