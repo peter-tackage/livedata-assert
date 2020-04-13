@@ -1,7 +1,7 @@
 package com.petertackage.livedatatest
 
 /*
- * Copyright 2018 Peter Tackage
+ * Copyright 2020 Peter Tackage
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@ package com.petertackage.livedatatest
  * limitations under the License.
  */
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 
 class LiveDataTestObserver<T> internal constructor() : Observer<T> {
 
@@ -25,6 +25,7 @@ class LiveDataTestObserver<T> internal constructor() : Observer<T> {
     val value
         get() = values.last()
 
+    @Suppress("MemberVisibilityCanBePrivate")
     val values
         get() = mutableValues.toList()
 

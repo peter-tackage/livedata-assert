@@ -1,7 +1,7 @@
 package com.petertackage.livedatatest
 
 /*
- * Copyright 2018 Peter Tackage
+ * Copyright 2020 Peter Tackage
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@ package com.petertackage.livedatatest
  * limitations under the License.
  */
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 
 fun <T> LiveData<T>.test(): LiveDataTestObserver<T> {
     return LiveDataTestObserver<T>()

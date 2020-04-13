@@ -1,7 +1,7 @@
 package com.petertackage.livedatatest
 
 /*
- * Copyright 2018 Peter Tackage
+ * Copyright 2020 Peter Tackage
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,8 @@ package com.petertackage.livedatatest
  * limitations under the License.
  */
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule
-import android.arch.lifecycle.MutableLiveData
-
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test

@@ -45,7 +45,7 @@ Brought to you by the power of the [Chilicorn](http://spiceprogram.org/chilicorn
 License
 =======
 
-    Copyright 2018 Peter Tackage
+    Copyright 2020 Peter Tackage
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
