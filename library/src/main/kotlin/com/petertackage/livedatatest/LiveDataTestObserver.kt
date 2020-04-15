@@ -20,21 +20,17 @@ import androidx.lifecycle.Observer
 
 class LiveDataTestObserver<T> internal constructor() : Observer<T> {
 
-    private val mutableValues: MutableList<T?>
+    private val mutableValues: MutableList<T?> = ArrayList()
 
     val value
-        get() = values.last()
+        get() = if (values.isNotEmpty()) values.last() else throw AssertionError("No values received")
 
     @Suppress("MemberVisibilityCanBePrivate")
     val values
-        get() = mutableValues.toList()
+        get() = mutableValues as List<T?>
 
     override fun onChanged(t: T?) {
         mutableValues.add(t)
-    }
-
-    init {
-        mutableValues = ArrayList()
     }
 
 }

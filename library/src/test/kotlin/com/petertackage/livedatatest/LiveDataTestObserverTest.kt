@@ -35,10 +35,11 @@ class LiveDataTestObserverTest {
     var thrown: ExpectedException = ExpectedException.none()
 
     @Test
-    fun `value throws NoSuchElementException when no values posted`() {
+    fun `value throws AssertionError when no values posted`() {
         val ld = MutableLiveData<String>()
         val lda = ld.test()
-        thrown.expect(NoSuchElementException::class.java)
+        thrown.expect(AssertionError::class.java)
+        thrown.expectMessage("No values received")
 
         lda.value
     }
